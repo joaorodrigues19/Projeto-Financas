@@ -1,0 +1,6 @@
+<div class="categoria-lista">
+    <div *ngFor="let cat of categorias" class="categoria-card">
+        <span>{{cat.nome}}</span>
+        <span [style.color]="cat.cor">{{cat.tipo}}</span>
+    </div>
+</div>
