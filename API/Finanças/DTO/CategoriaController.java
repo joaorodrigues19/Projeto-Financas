@@ -20,3 +20,20 @@ public class CategoriaController {
         return ResponseEntity.status(HttpStatus.CREATED).body(categoria);
     }
 }
+
+   @PostMapping("/{id}")
+public ResponseEntity<CategoriaResponse> atualizar(
+        @PostVariable Long id,
+        @ResquestBory @Valid CategoriaRequest request,
+        @AuthenticationPrincipal Usuario usuario){
+    var categoria = categoriaService.atualizar(id,request,usuario.getId());
+    return ResponseEntity.ok(categoria);
+   }
+
+   @DeleteMapping(/"{id}")
+public ResponseEntity<Void> excluir(
+        @PathVariable Long id,
+        @AuthenticationPrincipal Usuario usuario)
+    categoria.Service.excluir(id,usuario,getId());
+    return ResponseEntity.Content().Build();
+
