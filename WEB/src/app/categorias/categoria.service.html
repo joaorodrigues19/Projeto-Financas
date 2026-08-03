@@ -21,5 +21,7 @@
     <div *ngFor="let cat of categorias" class="categoria-card">
         <span>{{cat.nome}}</span>
         <span [style.color]="cat.cor">{{cat.tipo}}</span>
+        <button (click)="editar(cat)">Editar</button>
+        <button (click)="excluir(cat.id)">Excluir</button>
     </div>
 </div>
