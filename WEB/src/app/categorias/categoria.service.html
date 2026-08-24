@@ -1,27 +1,29 @@
-<div class="categoria-conteiner">
-    <h2>{{editandoId? 'Editando Categoria' : 'Nova Categoria'}}</h2>
-    <form (ngSubmit)="salvar()" class = "categoria-form">
-<input type= "text"[(ngModel)] = "form.nome" name = "nome"
-        placeholder= "Nome" required/>
+<div class="categoria-container">
+    <h2>{{editandoId ? 'Editar Categoria' : 'Nova Categoria'}}</h2>
+
+    <form (ngSubmit)="salvar()" class="categoria-form">
+        <input type="text" [(ngModel)]="form.nome" name="nome" placeholder="Nome" required />
 
         <select [(ngModel)]="form.tipo" name="tipo">
             <option value="RECEITA">Receita</option>
             <option value="DESPESA">Despesa</option>
         </select>
 
-        <input type = "color" [(ngModel)]="form.cor" name="cor"/>
-        <input type = "text"[(ngModel)]="form.icone" name="icone"
-        placeholder="icone"/>
+        <input type="color" [(ngModel)]="form.cor" name="cor" />
+        <input type="text" [(ngModel)]="form.icone" name="icone" placeholder="Icone" />
 
-        <button type="submit">{{editandoId?'Atualizar' : 'Criar'}} </button>
-        <button type="button" *ngIf="editandoId"
-                (click)="limparForm()">Cancelar</button>
+        <button type="submit">{{editandoId ? 'Atualizar' : 'Criar'}}</button>
+        <button type="button" *ngIf="editandoId" (click)="limparForm()">Cancelar</button>
     </form>
 
-    <div *ngFor="let cat of categorias" class="categoria-card">
-        <span>{{cat.nome}}</span>
-        <span [style.color]="cat.cor">{{cat.tipo}}</span>
-        <button (click)="editar(cat)">Editar</button>
-        <button (click)="excluir(cat.id)">Excluir</button>
+    <div class="categoria-lista">
+        <div *ngFor="let cat of categorias" class="categoria-card">
+            <span>{{cat.nome}}</span>
+            <span [style.color]="cat.cor">{{cat.tipo}}</span>
+            <div class="categoria-acoes">
+                <button (click)="editar(cat)">Editar</button>
+                <button (click)="excluir(cat.id)">Excluir</button>
+            </div>
+        </div>
     </div>
 </div>
