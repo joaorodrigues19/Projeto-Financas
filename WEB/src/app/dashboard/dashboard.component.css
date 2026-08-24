@@ -42,26 +42,3 @@
 .card-valor.despesa {
     color: #f44336;
 }
-
-.graficos {
-    display: grid;
-    grid-template-columns: 1fr 2fr;
-    gap: 20px;
-}
-
-.grafico-card {
-    background: white;
-    border-radius: 10px;
-    padding: 24px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
-}
-
-.grafico-card h3 {
-    font-size: 15px;
-    color: #1a1a2e;
-    margin-bottom: 16px;
-}
-
-.grafico-card:first-child {
-    grid-row: span 2;
-}
