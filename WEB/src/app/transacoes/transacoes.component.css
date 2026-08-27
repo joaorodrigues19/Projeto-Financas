@@ -1,0 +1,153 @@
+.transacoes-container {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.transacao-form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 30px;
+    padding: 20px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: #f9f9f9;
+}
+
+.transacao-form input,
+.transacao-form select {
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    flex: 1;
+    min-width: 140px;
+}
+
+.form-acoes {
+    display: flex;
+    gap: 8px;
+    width: 100%;
+}
+
+.transacao-form button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.transacao-form button[type="submit"] {
+    background: #4CAF50;
+    color: white;
+}
+
+.transacao-form button[type="submit"]:hover {
+    background: #45a049;
+}
+
+.transacao-form button[type="button"] {
+    background: #f44336;
+    color: white;
+}
+
+.transacao-form button[type="button"]:hover {
+    background: #da190b;
+}
+
+.transacao-lista {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.transacao-card {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 16px;
+    border-radius: 8px;
+    background: white;
+    border-left: 4px solid #ccc;
+}
+
+.transacao-card.receita {
+    border-left-color: #4CAF50;
+}
+
+.transacao-card.despesa {
+    border-left-color: #f44336;
+}
+
+.transacao-info {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.transacao-descricao {
+    font-size: 15px;
+    font-weight: 600;
+}
+
+.transacao-categoria {
+    font-size: 12px;
+    color: #8899aa;
+}
+
+.transacao-data {
+    font-size: 12px;
+    color: #8899aa;
+}
+
+.transacao-valor-acoes {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.transacao-valor {
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.receita .transacao-valor {
+    color: #4CAF50;
+}
+
+.despesa .transacao-valor {
+    color: #f44336;
+}
+
+.transacao-acoes {
+    display: flex;
+    gap: 8px;
+}
+
+.transacao-acoes button {
+    padding: 6px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.transacao-acoes button:first-child {
+    background: #2196F3;
+    color: white;
+}
+
+.transacao-acoes button:first-child:hover {
+    background: #1976D2;
+}
+
+.transacao-acoes button:last-child {
+    background: #f44336;
+    color: white;
+}
+
+.transacao-acoes button:last-child:hover {
+    background: #da190b;
+}

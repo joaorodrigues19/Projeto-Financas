@@ -1,0 +1,42 @@
+<div class="transacoes-container">
+    <h2>{{editandoId ? 'Editar Transação' : 'Nova Transação'}}</h2>
+
+    <form (ngSubmit)="salvar()" class="transacao-form">
+        <input type="text" [(ngModel)]="form.descricao" name="descricao" placeholder="Descrição" required />
+        <input type="number" [(ngModel)]="form.valor" name="valor" placeholder="Valor" required step="0.01" min="0.01" />
+
+        <select [(ngModel)]="form.tipo" name="tipo">
+            <option value="RECEITA">Receita</option>
+            <option value="DESPESA">Despesa</option>
+        </select>
+
+        <input type="date" [(ngModel)]="form.data" name="data" required />
+
+        <select [(ngModel)]="form.categoriaId" name="categoriaId" required>
+            <option [ngValue]="0" disabled>Selecione a categoria</option>
+            <option *ngFor="let cat of categorias" [ngValue]="cat.id">{{cat.nome}}</option>
+        </select>
+
+        <div class="form-acoes">
+            <button type="submit">{{editandoId ? 'Atualizar' : 'Criar'}}</button>
+            <button type="button" *ngIf="editandoId" (click)="limparForm()">Cancelar</button>
+        </div>
+    </form>
+
+    <div class="transacao-lista">
+        <div *ngFor="let t of transacoes" class="transacao-card" [class.receita]="t.tipo === 'RECEITA'" [class.despesa]="t.tipo === 'DESPESA'">
+            <div class="transacao-info">
+                <span class="transacao-descricao">{{t.descricao}}</span>
+                <span class="transacao-categoria">{{t.categoriaNome}}</span>
+                <span class="transacao-data">{{t.data}}</span>
+            </div>
+            <div class="transacao-valor-acoes">
+                <span class="transacao-valor">R$ {{t.valor | number:'1.2-2'}}</span>
+                <div class="transacao-acoes">
+                    <button (click)="editar(t)">Editar</button>
+                    <button (click)="excluir(t.id)">Excluir</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
