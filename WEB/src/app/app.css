@@ -5,6 +5,7 @@
 
 .sidebar {
     width: 220px;
+    min-width: 220px;
     background: #0a1929;
     color: white;
     display: flex;
@@ -13,6 +14,7 @@
     top: 0;
     left: 0;
     height: 100vh;
+    z-index: 10;
 }
 
 .sidebar-logo {
@@ -63,11 +65,12 @@
     flex: 1;
     margin-left: 220px;
     background: #f0f4f8;
+    min-width: 0;
 }
 
 .top-header {
     background: white;
-    padding: 16px 32px;
+    padding: 16px 24px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -94,5 +97,40 @@
 }
 
 .content {
-    padding: 24px 32px;
+    padding: 24px;
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        width: 60px;
+        min-width: 60px;
+    }
+
+    .sidebar-logo h2,
+    .sidebar-nav a span:not(.icon) {
+        display: none;
+    }
+
+    .sidebar-logo {
+        padding: 16px 12px;
+        text-align: center;
+    }
+
+    .sidebar-nav a {
+        justify-content: center;
+        padding: 14px 0;
+        gap: 0;
+    }
+
+    .main-area {
+        margin-left: 60px;
+    }
+
+    .header-search input {
+        width: 150px;
+    }
+
+    .content {
+        padding: 16px;
+    }
 }

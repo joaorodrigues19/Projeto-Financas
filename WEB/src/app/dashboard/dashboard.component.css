@@ -1,14 +1,15 @@
 .dashboard {
-    display: grid;
-    grid-template-rows: auto 1fr;
-    gap: 12px;
-    height: calc(100vh - 80px);
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    height: calc(100vh - 120px);
 }
 
 .cards {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 12px;
+    flex-shrink: 0;
 }
 
 .card {
@@ -50,6 +51,7 @@
     grid-template-columns: 2fr 1fr;
     grid-template-rows: 1fr 1fr;
     gap: 12px;
+    flex: 1;
     min-height: 0;
 }
 
@@ -65,6 +67,7 @@
     display: flex;
     flex-direction: column;
     min-height: 0;
+    overflow: hidden;
 }
 
 .grafico-card h3 {
@@ -84,16 +87,38 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
 }
 
 .grafico-pizza h3 {
-    font-size: 24px;
-    margin-bottom: auto;
+    font-size: 20px;
+    margin-bottom: 12px;
 }
 
 .grafico-pizza canvas {
-    max-width: 560px;
-    max-height: 560px;
+    max-width: 100%;
+    max-height: 100%;
     margin: auto 0;
+}
+
+@media (max-width: 768px) {
+    .cards {
+        grid-template-columns: 1fr;
+    }
+
+    .dashboard {
+        height: auto;
+    }
+
+    .graficos {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto;
+    }
+
+    .grafico-pizza {
+        grid-row: auto;
+    }
+
+    .grafico-card {
+        height: 280px;
+    }
 }
