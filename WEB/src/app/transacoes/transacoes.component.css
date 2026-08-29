@@ -4,6 +4,26 @@
     padding: 20px;
 }
 
+.mensagem {
+    padding: 10px 16px;
+    border-radius: 6px;
+    margin-bottom: 16px;
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.mensagem.sucesso {
+    background: #e8f5e9;
+    color: #2e7d32;
+    border: 1px solid #a5d6a7;
+}
+
+.mensagem.erro {
+    background: #ffebee;
+    color: #c62828;
+    border: 1px solid #ef9a9a;
+}
+
 .transacao-form {
     display: flex;
     flex-wrap: wrap;
@@ -150,4 +170,33 @@
 
 .transacao-acoes button:last-child:hover {
     background: #da190b;
+}
+
+.confirmacao {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    color: #f44336;
+    font-weight: 600;
+}
+
+.btn-sim {
+    background: #f44336 !important;
+    color: white;
+    padding: 4px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.btn-nao {
+    background: #9e9e9e !important;
+    color: white;
+    padding: 4px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 12px;
 }

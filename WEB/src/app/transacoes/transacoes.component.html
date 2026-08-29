@@ -1,6 +1,10 @@
 <div class="transacoes-container">
     <h2>{{editandoId ? 'Editar Transação' : 'Nova Transação'}}</h2>
 
+    <div *ngIf="mensagem" class="mensagem" [class.sucesso]="mensagemTipo === 'sucesso'" [class.erro]="mensagemTipo === 'erro'">
+        {{mensagem}}
+    </div>
+
     <form (ngSubmit)="salvar()" class="transacao-form">
         <input type="text" [(ngModel)]="form.descricao" name="descricao" placeholder="Descrição" required />
         <input type="number" [(ngModel)]="form.valor" name="valor" placeholder="Valor" required step="0.01" min="0.01" />
@@ -34,7 +38,12 @@
                 <span class="transacao-valor">R$ {{t.valor | number:'1.2-2'}}</span>
                 <div class="transacao-acoes">
                     <button (click)="editar(t)">Editar</button>
-                    <button (click)="excluir(t.id)">Excluir</button>
+                    <button *ngIf="confirmarExclusaoId !== t.id" (click)="pedirConfirmacao(t.id)">Excluir</button>
+                    <div *ngIf="confirmarExclusaoId === t.id" class="confirmacao">
+                        <span>Excluir?</span>
+                        <button class="btn-sim" (click)="confirmarExclusao()">Sim</button>
+                        <button class="btn-nao" (click)="cancelarExclusao()">Não</button>
+                    </div>
                 </div>
             </div>
         </div>
