@@ -1,6 +1,10 @@
 <div class="categoria-container">
     <h2>{{editandoId ? 'Editar Categoria' : 'Nova Categoria'}}</h2>
 
+    <div *ngIf="mensagem" class="mensagem" [class.sucesso]="mensagemTipo === 'sucesso'" [class.erro]="mensagemTipo === 'erro'">
+        {{mensagem}}
+    </div>
+
     <form (ngSubmit)="salvar()" class="categoria-form">
         <input type="text" [(ngModel)]="form.nome" name="nome" placeholder="Nome" required />
 
@@ -22,7 +26,12 @@
             <span [style.color]="cat.cor">{{cat.tipo}}</span>
             <div class="categoria-acoes">
                 <button (click)="editar(cat)">Editar</button>
-                <button (click)="excluir(cat.id)">Excluir</button>
+                <button *ngIf="confirmarExclusaoId !== cat.id" (click)="pedirConfirmacao(cat.id)">Excluir</button>
+                <div *ngIf="confirmarExclusaoId === cat.id" class="confirmacao">
+                    <span>Excluir?</span>
+                    <button class="btn-sim" (click)="confirmarExclusao()">Sim</button>
+                    <button class="btn-nao" (click)="cancelarExclusao()">Não</button>
+                </div>
             </div>
         </div>
     </div>

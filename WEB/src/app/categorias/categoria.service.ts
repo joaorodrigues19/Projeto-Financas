@@ -15,6 +15,9 @@ export class CategoriasComponent implements OnInit {
     categorias: CategoriaResponse[] = [];
     editandoId: number | null = null;
     form: CategoriaRequest = {nome: '', tipo: 'DESPESA', cor: '#000000', icone: ''};
+    mensagem: string = '';
+    mensagemTipo: 'sucesso' | 'erro' = 'sucesso';
+    confirmarExclusaoId: number | null = null;
 
     constructor(private categoriaService: CategoriasService) {}
 
@@ -30,14 +33,22 @@ export class CategoriasComponent implements OnInit {
 
     salvar(): void {
         if (this.editandoId) {
-            this.categoriaService.atualizar(this.editandoId, this.form).subscribe(() => {
-                this.carregarCategorias();
-                this.limparForm();
+            this.categoriaService.atualizar(this.editandoId, this.form).subscribe({
+                next: () => {
+                    this.mostrarMensagem('Categoria atualizada com sucesso', 'sucesso');
+                    this.carregarCategorias();
+                    this.limparForm();
+                },
+                error: () => this.mostrarMensagem('Erro ao atualizar categoria', 'erro')
             });
         } else {
-            this.categoriaService.criar(this.form).subscribe(() => {
-                this.carregarCategorias();
-                this.limparForm();
+            this.categoriaService.criar(this.form).subscribe({
+                next: () => {
+                    this.mostrarMensagem('Categoria criada com sucesso', 'sucesso');
+                    this.carregarCategorias();
+                    this.limparForm();
+                },
+                error: () => this.mostrarMensagem('Erro ao criar categoria', 'erro')
             });
         }
     }
@@ -47,13 +58,38 @@ export class CategoriasComponent implements OnInit {
         this.form = {nome: cat.nome, tipo: cat.tipo, cor: cat.cor, icone: cat.icone};
     }
 
-    excluir(id: number): void {
-        this.categoriaService.excluir(id).subscribe(() =>
-            this.carregarCategorias());
+    pedirConfirmacao(id: number): void {
+        this.confirmarExclusaoId = id;
+    }
+
+    cancelarExclusao(): void {
+        this.confirmarExclusaoId = null;
+    }
+
+    confirmarExclusao(): void {
+        if (this.confirmarExclusaoId) {
+            this.categoriaService.excluir(this.confirmarExclusaoId).subscribe({
+                next: () => {
+                    this.mostrarMensagem('Categoria excluída com sucesso', 'sucesso');
+                    this.carregarCategorias();
+                    this.confirmarExclusaoId = null;
+                },
+                error: () => {
+                    this.mostrarMensagem('Erro ao excluir categoria', 'erro');
+                    this.confirmarExclusaoId = null;
+                }
+            });
+        }
     }
 
     limparForm(): void {
         this.editandoId = null;
         this.form = {nome: '', tipo: 'DESPESA', cor: '#000000', icone: ''};
+    }
+
+    mostrarMensagem(texto: string, tipo: 'sucesso' | 'erro'): void {
+        this.mensagem = texto;
+        this.mensagemTipo = tipo;
+        setTimeout(() => this.mensagem = '', 3000);
     }
 }

@@ -18,6 +18,9 @@ export class TransacoesComponent implements OnInit {
     categorias: CategoriaResponse[] = [];
     editandoId: number | null = null;
     form: TransacaoRequest = {descricao: '', valor: 0, tipo: 'DESPESA', data: '', categoriaId: 0};
+    mensagem: string = '';
+    mensagemTipo: 'sucesso' | 'erro' = 'sucesso';
+    confirmarExclusaoId: number | null = null;
 
     constructor(
         private transacaoService: TransacaoHttpService,
@@ -43,14 +46,22 @@ export class TransacoesComponent implements OnInit {
 
     salvar(): void {
         if (this.editandoId) {
-            this.transacaoService.atualizar(this.editandoId, this.form).subscribe(() => {
-                this.carregarTransacoes();
-                this.limparForm();
+            this.transacaoService.atualizar(this.editandoId, this.form).subscribe({
+                next: () => {
+                    this.mostrarMensagem('Transação atualizada com sucesso', 'sucesso');
+                    this.carregarTransacoes();
+                    this.limparForm();
+                },
+                error: () => this.mostrarMensagem('Erro ao atualizar transação', 'erro')
             });
         } else {
-            this.transacaoService.criar(this.form).subscribe(() => {
-                this.carregarTransacoes();
-                this.limparForm();
+            this.transacaoService.criar(this.form).subscribe({
+                next: () => {
+                    this.mostrarMensagem('Transação criada com sucesso', 'sucesso');
+                    this.carregarTransacoes();
+                    this.limparForm();
+                },
+                error: () => this.mostrarMensagem('Erro ao criar transação', 'erro')
             });
         }
     }
@@ -66,13 +77,38 @@ export class TransacoesComponent implements OnInit {
         };
     }
 
-    excluir(id: number): void {
-        this.transacaoService.excluir(id).subscribe(() =>
-            this.carregarTransacoes());
+    pedirConfirmacao(id: number): void {
+        this.confirmarExclusaoId = id;
+    }
+
+    cancelarExclusao(): void {
+        this.confirmarExclusaoId = null;
+    }
+
+    confirmarExclusao(): void {
+        if (this.confirmarExclusaoId) {
+            this.transacaoService.excluir(this.confirmarExclusaoId).subscribe({
+                next: () => {
+                    this.mostrarMensagem('Transação excluída com sucesso', 'sucesso');
+                    this.carregarTransacoes();
+                    this.confirmarExclusaoId = null;
+                },
+                error: () => {
+                    this.mostrarMensagem('Erro ao excluir transação', 'erro');
+                    this.confirmarExclusaoId = null;
+                }
+            });
+        }
     }
 
     limparForm(): void {
         this.editandoId = null;
         this.form = {descricao: '', valor: 0, tipo: 'DESPESA', data: '', categoriaId: 0};
+    }
+
+    mostrarMensagem(texto: string, tipo: 'sucesso' | 'erro'): void {
+        this.mensagem = texto;
+        this.mensagemTipo = tipo;
+        setTimeout(() => this.mensagem = '', 3000);
     }
 }
