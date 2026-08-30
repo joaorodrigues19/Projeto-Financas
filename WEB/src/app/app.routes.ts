@@ -4,8 +4,8 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { TransacoesComponent } from './transacoes/transacoes.component';
 
 export const routes: Routes = [
-    { path: 'dashboard', component: DashboardComponent },
-    { path: 'categorias', component: CategoriasComponent },
-    { path: 'transacoes', component: TransacoesComponent },
+    { path: 'dashboard', component: DashboardComponent, data: { titulo: 'Dashboard' } },
+    { path: 'categorias', component: CategoriasComponent, data: { titulo: 'Categorias' } },
+    { path: 'transacoes', component: TransacoesComponent, data: { titulo: 'Transações' } },
     { path: '', redirectTo: 'dashboard', pathMatch: 'full' }
 ];

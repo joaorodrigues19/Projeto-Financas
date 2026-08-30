@@ -14,16 +14,22 @@
         </select>
 
         <input type="color" [(ngModel)]="form.cor" name="cor" />
-        <input type="text" [(ngModel)]="form.icone" name="icone" placeholder="Icone" />
+        <div class="icone-upload" (click)="iconeInput.click()">
+            <input #iconeInput type="file" accept="image/*" (change)="onIconeSelecionado($event)" hidden />
+            <img *ngIf="form.icone" [src]="form.icone" class="icone-preview" />
+            <span *ngIf="!form.icone" class="icone-placeholder">📎 Icone</span>
+        </div>
 
         <button type="submit">{{editandoId ? 'Atualizar' : 'Criar'}}</button>
         <button type="button" *ngIf="editandoId" (click)="limparForm()">Cancelar</button>
     </form>
 
     <div class="categoria-lista">
-        <div *ngFor="let cat of categorias" class="categoria-card">
-            <span>{{cat.nome}}</span>
-            <span [style.color]="cat.cor">{{cat.tipo}}</span>
+        <div *ngFor="let cat of categorias" class="categoria-card" [style.border-left]="'4px solid ' + cat.cor">
+            <img *ngIf="cat.icone && cat.icone.startsWith('data:')" [src]="cat.icone" class="categoria-icone" />
+            <span *ngIf="!cat.icone || !cat.icone.startsWith('data:')" class="categoria-cor-dot" [style.background]="cat.cor"></span>
+            <span class="categoria-nome">{{cat.nome}}</span>
+            <span class="categoria-tipo" [class.tipo-receita]="cat.tipo === 'RECEITA'" [class.tipo-despesa]="cat.tipo === 'DESPESA'">{{cat.tipo}}</span>
             <div class="categoria-acoes">
                 <button (click)="editar(cat)">Editar</button>
                 <button *ngIf="confirmarExclusaoId !== cat.id" (click)="pedirConfirmacao(cat.id)">Excluir</button>
