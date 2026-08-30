@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ChangeDetectorRef} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {CategoriasService} from './categoria.http.service';
@@ -19,7 +19,7 @@ export class CategoriasComponent implements OnInit {
     mensagemTipo: 'sucesso' | 'erro' = 'sucesso';
     confirmarExclusaoId: number | null = null;
 
-    constructor(private categoriaService: CategoriasService) {}
+    constructor(private categoriaService: CategoriasService, private cdr: ChangeDetectorRef) {}
 
     ngOnInit(): void {
         this.carregarCategorias();
@@ -27,7 +27,10 @@ export class CategoriasComponent implements OnInit {
 
     carregarCategorias(): void {
         this.categoriaService.listar().subscribe(
-            (dados: CategoriaResponse[]) => this.categorias = dados
+            (dados: CategoriaResponse[]) => {
+                this.categorias = dados;
+                this.cdr.markForCheck();
+            }
         );
     }
 
@@ -90,6 +93,10 @@ export class CategoriasComponent implements OnInit {
     mostrarMensagem(texto: string, tipo: 'sucesso' | 'erro'): void {
         this.mensagem = texto;
         this.mensagemTipo = tipo;
-        setTimeout(() => this.mensagem = '', 3000);
+        this.cdr.markForCheck();
+        setTimeout(() => {
+            this.mensagem = '';
+            this.cdr.markForCheck();
+        }, 3000);
     }
 }

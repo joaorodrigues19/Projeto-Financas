@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ChangeDetectorRef} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
 import {TransacaoHttpService} from './transacao.http.service';
@@ -24,7 +24,8 @@ export class TransacoesComponent implements OnInit {
 
     constructor(
         private transacaoService: TransacaoHttpService,
-        private categoriaService: CategoriasService
+        private categoriaService: CategoriasService,
+        private cdr: ChangeDetectorRef
     ) {}
 
     ngOnInit(): void {
@@ -34,13 +35,19 @@ export class TransacoesComponent implements OnInit {
 
     carregarTransacoes(): void {
         this.transacaoService.listar().subscribe(
-            (dados: TransacaoResponse[]) => this.transacoes = dados
+            (dados: TransacaoResponse[]) => {
+                this.transacoes = dados;
+                this.cdr.markForCheck();
+            }
         );
     }
 
     carregarCategorias(): void {
         this.categoriaService.listar().subscribe(
-            (dados: CategoriaResponse[]) => this.categorias = dados
+            (dados: CategoriaResponse[]) => {
+                this.categorias = dados;
+                this.cdr.markForCheck();
+            }
         );
     }
 
@@ -109,6 +116,10 @@ export class TransacoesComponent implements OnInit {
     mostrarMensagem(texto: string, tipo: 'sucesso' | 'erro'): void {
         this.mensagem = texto;
         this.mensagemTipo = tipo;
-        setTimeout(() => this.mensagem = '', 3000);
+        this.cdr.markForCheck();
+        setTimeout(() => {
+            this.mensagem = '';
+            this.cdr.markForCheck();
+        }, 3000);
     }
 }
