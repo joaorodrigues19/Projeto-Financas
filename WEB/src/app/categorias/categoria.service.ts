@@ -85,6 +85,19 @@ export class CategoriasComponent implements OnInit {
         }
     }
 
+    onIconeSelecionado(event: Event): void {
+        const input = event.target as HTMLInputElement;
+        const file = input.files?.[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = () => {
+            this.form.icone = reader.result as string;
+            this.cdr.markForCheck();
+        };
+        reader.readAsDataURL(file);
+    }
+
     limparForm(): void {
         this.editandoId = null;
         this.form = {nome: '', tipo: 'DESPESA', cor: '#000000', icone: ''};

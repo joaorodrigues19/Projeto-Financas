@@ -31,7 +31,10 @@
         <div *ngFor="let t of transacoes" class="transacao-card" [class.receita]="t.tipo === 'RECEITA'" [class.despesa]="t.tipo === 'DESPESA'">
             <div class="transacao-info">
                 <span class="transacao-descricao">{{t.descricao}}</span>
-                <span class="transacao-categoria">{{t.categoriaNome}}</span>
+                <div class="transacao-meta">
+                    <span class="transacao-categoria">{{t.categoriaNome}}</span>
+                    <span class="transacao-tipo-badge" [class.tipo-receita]="t.tipo === 'RECEITA'" [class.tipo-despesa]="t.tipo === 'DESPESA'">{{t.tipo}}</span>
+                </div>
                 <span class="transacao-data">{{t.data}}</span>
             </div>
             <div class="transacao-valor-acoes">

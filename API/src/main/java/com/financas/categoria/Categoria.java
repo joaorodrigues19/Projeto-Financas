@@ -23,6 +23,7 @@ public class Categoria {
 
     private String cor;
 
+    @Column(columnDefinition = "VARCHAR(MAX)")
     private String icone;
 
     public Categoria(String nome, TipoCategoria tipo, String cor, String icone) {
