@@ -1,4 +1,4 @@
-import {Component, AfterViewInit, ViewChild, ElementRef} from '@angular/core';
+import {Component, AfterViewInit, ViewChild, ElementRef, ChangeDetectorRef} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {Chart, registerables} from 'chart.js';
 import {DashboardHttpService} from './dashboard.http.service';
@@ -26,7 +26,7 @@ export class DashboardComponent implements AfterViewInit {
     @ViewChild('graficoLinha') graficoLinhaRef!: ElementRef<HTMLCanvasElement>;
     @ViewChild('graficoBarra') graficoBarraRef!: ElementRef<HTMLCanvasElement>;
 
-    constructor(private dashboardService: DashboardHttpService) {}
+    constructor(private dashboardService: DashboardHttpService, private cdr: ChangeDetectorRef) {}
 
     ngAfterViewInit(): void {
         this.carregarDados();
@@ -37,6 +37,7 @@ export class DashboardComponent implements AfterViewInit {
             this.saldo = dados.saldo;
             this.receitas = dados.totalReceitas;
             this.despesas = dados.totalDespesas;
+            this.cdr.markForCheck();
             this.criarGraficoBarra(dados);
             this.criarGraficoPizza(dados);
             this.criarGraficoLinha(dados);
